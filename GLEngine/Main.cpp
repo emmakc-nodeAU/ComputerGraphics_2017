@@ -3,8 +3,43 @@
 #include <iostream>
 
 #include <Gizmos.h>
+#define GLM_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+
+#include "SolarSystem.h"
+
+// Put in class eventually
+// ID Matrix 4 x 4 Column Major
+// [1] [] [] [] = X
+// [] [1] [] [] = Y (Up)
+// [] [] [1] [] = Z
+// [] [] [] [1] = Position
+
+
+glm::mat4 sunTransform(1);
+glm::mat4 planetTransform(1);
+
+void setupSolarSystem()
+{
+	planetTransform[3] = glm::vec4(4, 0, 0, 1);
+}
+
+void renderSolarSystem()
+{
+	glm::mat4 rot = glm::rotate(0.01f, glm::vec3(0, 1, 0));
+	sunTransform = sunTransform * rot;
+
+	aie::Gizmos::addSphere(sunTransform[3].xyz(),
+		2.0f, 32, 32, glm::vec4(0.7f,0.7f, 0, 1), (&sunTransform));
+
+	// Orbiting planet
+	rot = glm::rotate(0.005f, glm::vec3(0, 1, 0));
+	planetTransform = rot * planetTransform;
+
+	aie::Gizmos::addSphere(planetTransform[3].xyz(),
+		0.5f, 32, 32, glm::vec4(0.0f, 0.5f, 0.0, 1), (&planetTransform));
+}
 
 int main()
 {
@@ -36,8 +71,6 @@ int main()
 	// ??
 	aie::Gizmos::create(64000, 64000, 64000, 64000);
 
-
-
 	// COLOR BUFFER:
 	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -55,6 +88,8 @@ int main()
 		glm::pi<float>() * 0.25f,
 		1280.0f / 720, 0.1f, 1000.0f);
 
+	setupSolarSystem();
+
 	// MAIN GAME LOOP:
 	// Setup While Loop before window closes
 	while (glfwWindowShouldClose(window) == false)
@@ -65,8 +100,13 @@ int main()
 		// Call GL Clear x2 buffers
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+
 		// Clear Gizmos / any rendering data
 		aie::Gizmos::clear();
+
+		// Call Render Solar System
+		renderSolarSystem();
 
 		// Draws 3 lines X, Y, Z axis - -sees direction our world is. Pass in ID matrix
 		aie::Gizmos::addTransform(glm::mat4(1), 3.0f);
@@ -85,6 +125,7 @@ int main()
 				glm::vec3(-10, 0, -10 + i),
 				i == 10 ? white : black);
 		}
+
 
 		aie::Gizmos::draw(projection * view);
 		// Dbl Buffer: Shows back buffer on screen, and prepares another buffer to write

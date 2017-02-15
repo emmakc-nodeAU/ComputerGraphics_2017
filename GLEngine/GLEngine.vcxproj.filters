@@ -24,9 +24,15 @@
     <ClCompile Include="..\deps\gl_core_4_4\gl_core_4_4.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SolarSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\AIE\Gizmos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SolarSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
