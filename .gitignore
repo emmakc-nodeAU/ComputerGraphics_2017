@@ -2,3 +2,4 @@
 GLEngine/Release/
 GLEngine/Debug/
 *.db
+builds/

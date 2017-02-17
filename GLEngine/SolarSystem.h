@@ -6,32 +6,32 @@
 
 #pragma once
 #include "Application.h"
-#include <glm/fwd.hpp>
-#include <glm/mat4x4.hpp>
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+//#include <glm/mat4x4.hpp>
 
 
-class SolarSystem
+class SolarSystem : public Application
 {
 public:
 	// Constructors
 	SolarSystem();
 	virtual ~SolarSystem();
 
-
-
-	//// FUNCTIONS
-	//// 1. START
-	//virtual bool startup();
-	//// 2. END
-	//virtual void shutdown();
-	//// 3. UPDATE
-	//virtual void update(float deltaTime);
-	//// 4. DRAW / RENDER
-	//virtual void draw();
-
+	// OVERRIDE VIRTUAL BASE APPLICATION FUNCTIONS
+	// FUNCTIONS
+	// SETUP
+	bool setup() override;
+	// SHUTDOWN
+	void shutdown() override;
+	// UPDATE
+	bool update() override;
+	// DRAW / RENDER
+	void render() override;
 protected:
 
 
 private:
-
+	glm::mat4 m_projection;
+	glm::mat4 m_view;
 };
