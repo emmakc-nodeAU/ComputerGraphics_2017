@@ -8,7 +8,7 @@
 #include "Application.h"
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-//#include <glm/mat4x4.hpp>
+#include <glm/mat4x4.hpp>
 
 
 class SolarSystem : public Application
